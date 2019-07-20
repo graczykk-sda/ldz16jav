@@ -11,15 +11,13 @@
 <body>
 
 <c:choose>
-    <c:when test="${param.wyloguj.equalsIgnoreCase('true')}">
+    <c:when test="${param.wyloguj == 'true'}">
         <% session.invalidate(); %>
     </c:when>
-    <c:when test="${param.submit.equalsIgnoreCase('login')}">
-        <c:set var="username" value="${param.user}"/>
-        <c:set var="pass" value="${param.password}"/>
+    <c:when test="${param.submit == 'login'}">
         <c:choose>
-            <c:when test="${username.equalsIgnoreCase('admin') && pass.equalsIgnoreCase('admin')}">
-                <c:set var="loggedUser" value="${username}" scope="session"/>
+            <c:when test="${param.user == 'admin' && param.password == 'admin'}">
+                <c:set var="loggedUser" value="${param.user}" scope="session"/>
                 Zalogowano poprawnie.
                 <a href="login.jsp?wyloguj=true">wyloguj</a>
             </c:when>
@@ -31,7 +29,7 @@
     </c:when>
     <c:otherwise>
         <c:choose>
-            <c:when test="${sessionScope.get('loggedUser') != null}">
+            <c:when test="${sessionScope.loggedUser == 'admin'}">
                 Użytkownik jest już zalogowany. <br/>
                 <a href="login.jsp?wyloguj=true">wyloguj</a>
             </c:when>
